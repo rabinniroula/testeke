@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build-linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,13 +18,18 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-            python-version: "3.10"
+            python-version: "3.11"
 
       - name: Install dependencies
         run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            binutils imagemagick libfuse2 \
+            squashfs-tools patchelf desktop-file-utils \
+            libgdk-pixbuf2.0-dev zsync dpkg-dev \
+            rpm zstd
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pyinstaller
         shell: bash
 
       - name: Prepare build metadata (config.json)
@@ -55,6 +60,12 @@ jobs:
         run: |
           rm -rf dist build
           pyinstaller build.spec
+
+      - name: Build Linux Packages (.deb, .rpm, .tar.zst)
+        shell: bash
+        run: |
+          chmod +x build_linux.sh
+          ./build_linux.sh
 
       - name: Create OTA ZIP (exclude ota_updater)
         id: ota_zip
@@ -114,5 +125,8 @@ jobs:
           files: |
             manifest-linux.json
             NiziPOSConnector-linux-ota-*.zip
+            dist/*.deb
+            dist/*.rpm
+            dist/*.zst
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

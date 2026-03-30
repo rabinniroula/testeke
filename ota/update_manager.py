@@ -410,7 +410,10 @@ QProgressBar::chunk {{
                 return False
 
             installed_dir = Path(os.path.dirname(sys.executable))
-            updater_exe = installed_dir / UPDATER_EXE_BASENAME
+            if sys.platform.startswith("windows"):
+                updater_exe = installed_dir / (UPDATER_EXE_BASENAME + '.exe')
+            else:
+                updater_exe = installed_dir / UPDATER_EXE_BASENAME
             if not updater_exe.exists():
                 QMessageBox.critical(
                     parent_widget,
@@ -419,7 +422,10 @@ QProgressBar::chunk {{
                 )
                 return False
 
-            main_exe = installed_dir / MAIN_EXE_BASENAME
+            if sys.platform.startswith("windows"):
+                main_exe = installed_dir / (MAIN_EXE_BASENAME + '.exe')
+            else:
+                main_exe = installed_dir / MAIN_EXE_BASENAME
             log_path = str(self.log_file)
             subprocess.Popen(
                 [
