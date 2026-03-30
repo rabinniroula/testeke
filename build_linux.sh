@@ -100,7 +100,7 @@ EOF
         cp "assets/icon.png" "$PKGDIR/usr/share/icons/hicolor/256x256/apps/${APP_NAME}.png"
     elif [ -f "assets/setup_icon.ico" ]; then
         echo "Converting .ico to .png (requires imagemagick)..."
-        convert "assets/setup_icon.ico[0]" "$PKGDIR/usr/share/icons/hicolor/256x256/apps/${APP_NAME}.png"
+        convert "assets/setup_icon.ico[5]" "$PKGDIR/usr/share/icons/hicolor/256x256/apps/${APP_NAME}.png"
     fi
 
     # Control file
@@ -210,7 +210,7 @@ EOF
     if [ -f "assets/icon.png" ]; then
         cp "assets/icon.png" "${STAGED_ROOT}/usr/share/icons/hicolor/256x256/apps/${APP_NAME}.png"
     elif [ -f "assets/setup_icon.ico" ]; then
-        convert "assets/setup_icon.ico[0]" "${STAGED_ROOT}/usr/share/icons/hicolor/256x256/apps/${APP_NAME}.png"
+        convert "assets/setup_icon.ico[5]" "${STAGED_ROOT}/usr/share/icons/hicolor/256x256/apps/${APP_NAME}.png"
     fi
 
     # Spec file
@@ -322,7 +322,7 @@ EOF
     if [ -f "assets/icon.png" ]; then
         cp "assets/icon.png" "${PKGDIR}/usr/share/icons/hicolor/256x256/apps/${APP_NAME}.png"
     elif [ -f "assets/setup_icon.ico" ]; then
-        convert "assets/setup_icon.ico[0]" "${PKGDIR}/usr/share/icons/hicolor/256x256/apps/${APP_NAME}.png"
+        convert "assets/setup_icon.ico[5]" "${PKGDIR}/usr/share/icons/hicolor/256x256/apps/${APP_NAME}.png"
     fi
 
     # .PKGINFO
